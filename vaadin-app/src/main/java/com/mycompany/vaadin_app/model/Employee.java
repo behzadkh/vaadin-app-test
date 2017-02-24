@@ -1,4 +1,4 @@
-package com.mycompany.vaadin_app;
+package com.mycompany.vaadin_app.model;
 
 public class Employee implements IEmployee{
 	

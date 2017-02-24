@@ -1,4 +1,4 @@
-package com.mycompany.vaadin_app;
+package com.mycompany.vaadin_app.validation;
 
 import com.vaadin.data.Validator;
 

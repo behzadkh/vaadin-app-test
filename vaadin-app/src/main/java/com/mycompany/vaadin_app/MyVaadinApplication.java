@@ -1,12 +1,16 @@
 package com.mycompany.vaadin_app;
 
+import com.mycompany.vaadin_app.model.Employee;
+import com.mycompany.vaadin_app.model.IEmployee;
 import com.vaadin.addon.touchkit.ui.TouchKitApplication;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
@@ -23,7 +27,7 @@ public class MyVaadinApplication extends TouchKitApplication implements ClickLis
 	
 	private PasswordField passTfl;
 	
-	private final Employee employee = new Employee();
+	private final IEmployee employee = new Employee();
 	
 	
 	
@@ -35,38 +39,31 @@ public class MyVaadinApplication extends TouchKitApplication implements ClickLis
     
     
     private void loginView(){
-    	FormLayout formLayout = new FormLayout();
+    	Panel loginPanel = new Panel("Login Form");
+    	loginPanel.setWidth("50%");
+    	GridLayout grid = new GridLayout(1,3);
+    	grid.setWidth("100%");
+//    	Label usernameLbl = new Label("username");
+    	usernameTfl = new TextField("username");
+    	usernameTfl.setWidth("100%");
+//    	grid.addComponent(usernameLbl, 0, 0);
+    	grid.addComponent(usernameTfl, 0, 0);
     	
-    	
-    	Label usernameLbl = new Label("username");
-    	usernameTfl = new TextField();    	    
-    	HorizontalLayout hLayout1 = new HorizontalLayout();    	
-    	hLayout1.addComponent(usernameLbl);
-    	hLayout1.addComponent(usernameTfl);
-    	
-    	
-    	
-    	Label passLbl = new Label("password");
-    	passTfl = new PasswordField();   
-    	HorizontalLayout hLayout2 = new HorizontalLayout();
-    	hLayout2.addComponent(passLbl);
-    	hLayout2.addComponent(passTfl);
-    	
+//    	Label passLbl = new Label("password");
+    	passTfl = new PasswordField("password"); 
+    	passTfl.setWidth("100%");
+//    	grid.addComponent(passLbl, 0, 1);
+    	grid.addComponent(passTfl, 0, 1);
     	
     	Button loginBtn = new Button("Login", this);
+    	loginBtn.setWidth("100%");
+
+    	grid.addComponent(loginBtn, 0, 2);
     	
+    	loginPanel.addComponent(grid);
     	
-    	
-    	formLayout.addComponent(hLayout1);
-    	formLayout.addComponent(hLayout2);
-    	formLayout.addComponent(loginBtn);
-    	
-    	
-    	
-    	 getMainWindow().addComponent(formLayout);
+    	getMainWindow().addComponent(loginPanel);
     	 
-    	
-    	
     }
 
 
