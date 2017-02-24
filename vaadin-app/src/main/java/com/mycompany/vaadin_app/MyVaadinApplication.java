@@ -3,6 +3,7 @@ package com.mycompany.vaadin_app;
 import com.mycompany.vaadin_app.model.Employee;
 import com.mycompany.vaadin_app.model.IEmployee;
 import com.vaadin.addon.touchkit.ui.TouchKitApplication;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -13,6 +14,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
 
@@ -39,8 +41,10 @@ public class MyVaadinApplication extends TouchKitApplication implements ClickLis
     
     
     private void loginView(){
+    	VerticalLayout vLayout = new VerticalLayout();
+    	vLayout.setSizeFull();
     	Panel loginPanel = new Panel("Login Form");
-    	loginPanel.setWidth("50%");
+    	loginPanel.setWidth("20%");
     	GridLayout grid = new GridLayout(1,3);
     	grid.setWidth("100%");
 //    	Label usernameLbl = new Label("username");
@@ -61,8 +65,9 @@ public class MyVaadinApplication extends TouchKitApplication implements ClickLis
     	grid.addComponent(loginBtn, 0, 2);
     	
     	loginPanel.addComponent(grid);
-    	
-    	getMainWindow().addComponent(loginPanel);
+    	vLayout.addComponent(loginPanel);
+    	vLayout.setComponentAlignment(loginPanel, Alignment.MIDDLE_CENTER);
+    	getMainWindow().addComponent(vLayout);
     	 
     }
 
@@ -93,14 +98,20 @@ public class MyVaadinApplication extends TouchKitApplication implements ClickLis
 			String loginMsg = " You clicked "+employee.numberOfLoginClick() + " time(s) on login button!";			
 			Notification errorNotification = new Notification("<p style=\"color:green;\">Login</p>",loginMsg, Notification.TYPE_HUMANIZED_MESSAGE);
 			errorNotification.setPosition( Window.Notification.POSITION_CENTERED);
+			errorNotification.setDelayMsec(3000);
 			getMainWindow().showNotification(errorNotification);
 		}
 		else {
 			Notification errorNotification = new Notification("<p style=\"color:red;\">Error</p>",errorMessage.toString(), Notification.TYPE_ERROR_MESSAGE);
 			errorNotification.setPosition( Notification.POSITION_CENTERED);
+			errorNotification.setDelayMsec(3000);
 			getMainWindow().showNotification(errorNotification);
 		}
 		
+	}
+	
+	private void showNotification(){
+		//todo
 	}
 
     
