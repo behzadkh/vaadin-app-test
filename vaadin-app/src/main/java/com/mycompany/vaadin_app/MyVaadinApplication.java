@@ -9,6 +9,8 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Window;
+import com.vaadin.ui.Window.Notification;
 
 /**
  * The Application's "main" class
@@ -23,7 +25,8 @@ public class MyVaadinApplication extends TouchKitApplication implements ClickLis
 	
 	private final Employee employee = new Employee();
 	
-	private Label numberOfLoginLbl;
+	
+	
 	
     @Override
     public void onBrowserDetailsReady() {
@@ -36,39 +39,71 @@ public class MyVaadinApplication extends TouchKitApplication implements ClickLis
     	
     	
     	Label usernameLbl = new Label("username");
-    	usernameTfl = new TextField();    	
+    	usernameTfl = new TextField();    	    
     	HorizontalLayout hLayout1 = new HorizontalLayout();    	
     	hLayout1.addComponent(usernameLbl);
     	hLayout1.addComponent(usernameTfl);
     	
+    	
+    	
     	Label passLbl = new Label("password");
-    	passTfl = new PasswordField(); 
+    	passTfl = new PasswordField();   
     	HorizontalLayout hLayout2 = new HorizontalLayout();
     	hLayout2.addComponent(passLbl);
     	hLayout2.addComponent(passTfl);
     	
+    	
     	Button loginBtn = new Button("Login", this);
     	
-    	numberOfLoginLbl = new Label();
+    	
     	
     	formLayout.addComponent(hLayout1);
     	formLayout.addComponent(hLayout2);
     	formLayout.addComponent(loginBtn);
-    	formLayout.addComponent(numberOfLoginLbl);
+    	
     	
     	
     	 getMainWindow().addComponent(formLayout);
+    	 
+    	
     	
     }
 
 
 	public void buttonClick(ClickEvent event) {
+		
+		String errorMessage = "";
+		boolean login = true;
+		
 		String username = (String)usernameTfl.getValue();
 		String password = (String)passTfl.getValue();
-		employee.setUsername(username);
-		employee.setPassword(password);
-		employee.setNumberOfLoginClick(employee.numberOfLoginClick()+1);
-		numberOfLoginLbl.setCaption("You clicked "+employee.numberOfLoginClick() + " time(s) on login button!");
+		username = username.trim();
+		password = password.trim();
+		
+		if(username.isEmpty()){
+			errorMessage += "<li >Please Enter Username...</li>" ;
+			login = false;
+		}
+		if(password.isEmpty()){
+			errorMessage += "<li >Please Enter password...</li>";
+			login = false;
+		}
+		if(login){
+			
+			employee.setUsername(username);
+			employee.setPassword(password);
+			employee.setNumberOfLoginClick(employee.numberOfLoginClick()+1);
+			String loginMsg = " You clicked "+employee.numberOfLoginClick() + " time(s) on login button!";			
+			Notification errorNotification = new Notification("<p style=\"color:green;\">Login</p>",loginMsg, Notification.TYPE_HUMANIZED_MESSAGE);
+			errorNotification.setPosition( Window.Notification.POSITION_CENTERED);
+			getMainWindow().showNotification(errorNotification);
+		}
+		else {
+			Notification errorNotification = new Notification("<p style=\"color:red;\">Error</p>",errorMessage.toString(), Notification.TYPE_ERROR_MESSAGE);
+			errorNotification.setPosition( Notification.POSITION_CENTERED);
+			getMainWindow().showNotification(errorNotification);
+		}
+		
 	}
 
     
